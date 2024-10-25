@@ -22,15 +22,21 @@ app.use(
     cookie: { secure: false }, // Set to true if using HTTPS
   })
 );
-
+let db;
+if (process.env.NODE_ENV === "test") {
+  // Use an in-memory SQLite database or mock for testing
+  const sqlite3 = require("sqlite3").verbose();
+  db = new sqlite3.Database(":memory:"); // In-memory database for tests
+}
+else {
 // Database connection
-const db = mysql.createConnection({
+ db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
   database: "pas",
 });
-
+}
 // Terminal listen notification
 app.listen(5002, () => {
   console.log("Server running on port 5002");
