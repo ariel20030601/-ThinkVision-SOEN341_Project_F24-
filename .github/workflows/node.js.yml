@@ -54,7 +54,7 @@ jobs:
       - name: Run server in test mode
         env:
           NODE_ENV: test
-        run: npm start &
+        run: npm start
 
       - name: Run tests for Sprint 2
         working-directory: ./Sprint-2
