@@ -32,7 +32,7 @@ const db = mysql.createConnection({
 });
 
 // Terminal listen notification
-app.listen(5002, () => {
+app.listn(5002, () => {
   console.log("Server running on port 5002");
 });
 
