@@ -1,6 +1,6 @@
 const request = require("supertest");
 const express = require("express");
-const app = require("../Sprint-2/server.js"); // Adjust the path to your server.js file
+const app = require("../server.js"); // Adjust the path to your server.js file
 
 // Mock the MySQL connection and db methods
 const mysql = require("mysql");
