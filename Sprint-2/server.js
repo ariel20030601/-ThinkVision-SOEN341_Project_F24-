@@ -2,6 +2,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
+const sqlite3 = require("sqlite3").verbose();
 const session = require("express-session");
 const { createReadStream, unlinkSync } = require("fs");
 const multer = require("multer");
