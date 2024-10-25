@@ -54,6 +54,7 @@ jobs:
       - name: Start the server
         run: |
           cd Sprint-2
+          NODE_ENV=test
           node server.js &
           sleep 5 # Give the server time to start
 
