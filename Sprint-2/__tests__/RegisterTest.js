@@ -1,5 +1,4 @@
 const request = require("supertest");
-const request = require("supertest");
 const express = require("express");
 const app = require("../sprint-2/server"); // Adjust the path to your server.js file
 
