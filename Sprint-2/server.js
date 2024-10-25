@@ -44,6 +44,7 @@ app.listen(5002, () => {
 
 // Database connection notification
 // Database connection notification
+if (require.main === module && process.env.NODE_ENV !== "test") {
 db.connect((err) => {
   if (err) {
     console.log("Error connecting to database");
@@ -84,6 +85,7 @@ db.connect((err) => {
     });
   }
 });
+};
 
 // Sets up file storage and naming
 const storage = multer.diskStorage({
