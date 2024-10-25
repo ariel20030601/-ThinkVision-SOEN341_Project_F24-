@@ -48,8 +48,8 @@ jobs:
         run: |
           mysql -h 127.0.0.1 -u root -prootpass pas < .github/workflows/init.sql
 
-      - name: Run tests for sprint 2
-        working-directory: ./sprint-2
+      - name: Run tests for Sprint 2
+        working-directory: ./Sprint-2
         run: |
           npm install
           npm test
