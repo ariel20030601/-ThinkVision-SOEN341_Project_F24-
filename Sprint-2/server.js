@@ -24,11 +24,15 @@ app.use(
 );
 let db;
 if (process.env.NODE_ENV === "test") {
-  // Use an in-memory SQLite database or mock for testing
-  const sqlite3 = require("sqlite3").verbose();
-  db = new sqlite3.Database(":memory:"); // In-memory database for tests
-}
-else {
+    // Use SQLite in test environment
+    db = new sqlite3.Database(':memory:');
+    db.serialize(() => {
+        // Create tables similar to your MySQL structure
+        db.run("CREATE TABLE students (ID INT, Username TEXT, Password TEXT, Team TEXT)");
+        db.run("CREATE TABLE teachers (ID INT, Username TEXT, Password TEXT)");
+        db.run("CREATE TABLE evaluations (ID INTEGER PRIMARY KEY AUTOINCREMENT, teammateID INT, cooperation INT, comments TEXT, reviewerID INT)");
+    }); 
+} else {
 // Database connection
  db = mysql.createConnection({
   host: "localhost",
