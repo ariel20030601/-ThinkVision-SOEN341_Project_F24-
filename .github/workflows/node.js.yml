@@ -46,7 +46,7 @@ jobs:
 
       - name: Initialize Database Tables
         run: |
-          mysql -h 127.0.0.1 -u root -prootpass pas < .github/init.sql
+          mysql -h 127.0.0.1 -u root -prootpass pas < .github/workflows/init.sql
 
       - name: Run tests for sprint 2
         working-directory: ./sprint-2
