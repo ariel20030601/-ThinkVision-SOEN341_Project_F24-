@@ -3,33 +3,63 @@
 
 name: Node.js CI
 
-env:
-  MYSQL_DATABASE: "pas"
-  MYSQL_USER: "root"
-  MYSQL_PASSWORD: ""
-  MYSQL_HOST: "127.0.0.1"
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: rootpass
+          MYSQL_DATABASE: pas
+        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
+        ports:
+          - 3306:3306
+        # Necessary delay for MySQL to start
+        options: --health-start-period=20s
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        sprint: ["sprint1", "sprint2", "sprint3", "sprint4"]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm test
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up MySQL connection and environment
+        run: |
+          echo "DB_HOST=127.0.0.1" > .env
+          echo "DB_USER=root" >> .env
+          echo "DB_PASS=rootpass" >> .env
+          echo "DB_NAME=pas" >> .env
+
+      - name: Initialize Database Tables
+        run: |
+          mysql -h 127.0.0.1 -u root -prootpass pas < .github/init.sql
+
+      - name: Run tests for each sprint
+        working-directory: ./${{ matrix.sprint }}
+        run: |
+          npm install
+          npm test
+
+      - name: Cleanup
+        if: always()
+        run: |
+          mysql -h 127.0.0.1 -u root -prootpass -e "DROP DATABASE pas"
