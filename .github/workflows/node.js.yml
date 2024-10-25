@@ -24,11 +24,7 @@ jobs:
         ports:
           - 3306:3306
         # Necessary delay for MySQL to start
-
-    strategy:
-      matrix:
-        sprint: ["sprint1", "sprint2", "sprint3", "sprint4"]
-
+        
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -52,8 +48,8 @@ jobs:
         run: |
           mysql -h 127.0.0.1 -u root -prootpass pas < .github/init.sql
 
-      - name: Run tests for each sprint
-        working-directory: ./${{ matrix.sprint }}
+      - name: Run tests for sprint 2
+        working-directory: ./sprint-2
         run: |
           npm install
           npm test
