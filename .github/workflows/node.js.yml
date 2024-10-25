@@ -35,9 +35,11 @@ jobs:
           node-version: "14"
 
       - name: Install dependencies
+        working-directory: ./Sprint-2
         run: npm install
       
       - name: Install test dependencies
+        working-directory: ./Sprint-2
         run: npm install --save-dev jest supertest
 
       - name: Set up MySQL connection and environment
