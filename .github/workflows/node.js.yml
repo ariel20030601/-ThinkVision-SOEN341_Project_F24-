@@ -24,7 +24,6 @@ jobs:
         ports:
           - 3306:3306
         # Necessary delay for MySQL to start
-        options: --health-start-period=20s
 
     strategy:
       matrix:
