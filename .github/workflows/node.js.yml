@@ -55,6 +55,7 @@ jobs:
         working-directory: ./Sprint-2
         run: |
           npm install
+          npm start
           npm test
 
       - name: Cleanup
